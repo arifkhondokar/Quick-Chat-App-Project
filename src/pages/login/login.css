@@ -100,3 +100,19 @@
     padding-left: 8px;
     cursor: pointer;
 }
+.loginBoxInner button {
+    margin-top: 15px;
+}
+.closeIcon button {
+    position: absolute;
+    content: '';
+    right: 15px;
+    top: 30px;
+    font-size: 35px;
+}
+.resetBtn {
+    margin: 20px 0 !important;
+    background-color: #008cea !important;
+    color: white !important;
+    border-radius: 10px !important;
+}

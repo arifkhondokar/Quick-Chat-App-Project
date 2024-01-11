@@ -20,7 +20,7 @@ const Registration = () => {
                     <span>Free register and you can enjoy it</span>
                     <div className='formMain'>
                       <div>
-                        <MuiInput style="inputStyle" variant="outlined" labeltext="Email Addres"  type="email" name="email" />
+                        <MuiInput style="inputStyle" variant="outlined" labeltext="Email Address"  type="email" name="email" />
                       </div>
                       <div>
                         <MuiInput style="inputStyle" variant="outlined" labeltext="Ful Name"  type="text" name="ful name" />
