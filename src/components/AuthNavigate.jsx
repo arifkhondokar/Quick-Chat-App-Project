@@ -1,10 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-const AuthNavigate = () => {
+const AuthNavigate = ({style, text, link, linkText}) => {
   return (
-    <div>
-      <h1>auth-navigate</h1>
-    </div>
+    <>
+      <p className={style}>
+        {text}
+        <Link to={link}>{linkText}</Link>
+      </p>
+    </>
   )
 }
 

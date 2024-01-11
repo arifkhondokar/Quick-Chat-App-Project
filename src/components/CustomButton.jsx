@@ -1,10 +1,11 @@
+import { Button } from '@mui/material'
 import React from 'react'
 
-const CustomButton = () => {
+const CustomButton = ({styling, variant, text}) => {
   return (
-    <div>
-      <h1>button</h1>
-    </div>
+    <>
+      <Button className={styling} variant={variant}>{text}</Button>
+    </>
   )
 }
 
