@@ -44,7 +44,7 @@
 .formMain {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 42px;
 }
 .loginImg {
     width: 100%;
@@ -64,6 +64,15 @@
     align-items: center;
     position: relative;
 }
+.passIconError {
+    left: 0;
+    bottom: -55px;
+    position: absolute;
+    width: 100%;
+}
+.errorText {
+    margin-top: 10px;
+}
 .passIcon span {
     position: absolute;
     content: '';
@@ -73,7 +82,7 @@
 .loginBtn {
     background-color: #5F34F5 !important;
     color: white;
-    padding: 15px 0 !important;
+    padding: 25px 0 !important;
     font-style: 20px;
     font-family: 'Open Sans', sans-serif;
     border-radius: 8px !important;
@@ -81,7 +90,7 @@
 .regBtn {
     background-color: #5F34F5 !important;
     color: white;
-    padding: 15px 5px !important;
+    padding: 25px 5px !important;
     font-style: 20px;
     font-family: 'Open Sans', sans-serif;
     border-radius: 75px !important;
@@ -100,18 +109,20 @@
     padding-left: 8px;
     cursor: pointer;
 }
+#forgot-password-modal {font-size: 30px !important;}
 .loginBoxInner button {
     margin-top: 15px;
 }
 .closeIcon button {
     position: absolute;
     content: '';
-    right: 15px;
-    top: 30px;
-    font-size: 35px;
+    right: 35px;
+    top: 35px;
+    color: #000;
+    font-size: 40px;
 }
 .resetBtn {
-    margin: 20px 0 !important;
+    margin: 30px 0 !important;
     background-color: #008cea !important;
     color: white !important;
     border-radius: 10px !important;
