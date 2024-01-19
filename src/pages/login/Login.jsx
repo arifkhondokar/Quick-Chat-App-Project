@@ -33,7 +33,7 @@ let [showPassword, setShowPassword] = useState(false);
   };
 // ------------validation------
 
-let [password, setPassword] = useState();
+let [password, setPassword] = useState('');
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,20}$/
 
@@ -42,19 +42,19 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#
   };
 
 // --------------------error messages-------------------
-let [emailError, setEmailError] = useState("")
+let [loginError, setLoginError] = useState("")
 
   let handlerLoginSubmit = () => {
       if (!email) {
-        setEmailError({ email: "Enter your email address" });
+        setLoginError({ email: "Enter your email address" });
       } else if (!email.match(emailregex)) {
-        setEmailError({ email: "Please enter a valid email address" });
+        setLoginError({ email: "Please enter a valid email address" });
       } else if (!password) {
-        setEmailError({ password: "Enter your password" });
+        setLoginError({ password: "Enter your password" });
       } else if (!password.match(passwordRegex)) {
-        setEmailError({ password: "Please enter a strong password" });
+        setLoginError({ password: "Please enter a strong password" });
       } else {
-        setEmailError({ email: "", password: "" });
+        setLoginError({ email: "", password: "" });
         console.log({email, password});
       }
     };
@@ -107,16 +107,16 @@ let [error, setError] = useState("")
                       <div>
                         <MuiInput onChange={handlerLoginEmail} style="inputStyle" variant="standard" labeltext="Email Address" type="email" name="email" />
                         {
-                          emailError.email &&
-                          <Alert className='errorText' variant="filled" severity="error">{emailError.email}</Alert>
+                          loginError.email &&
+                          <Alert className='errorText' variant="filled" severity="error">{loginError.email}</Alert>
                         }
                       </div>
                       <div className='passIcon'>
                         <MuiInput onChange={handlerLoginPassword} style="inputStyle" variant="standard" labeltext="Password" type={showPassword ? 'text' : 'password'} name="password" />
                         <div className='passIconError'>
                         {
-                          emailError.password &&
-                          <Alert className='errorText' variant="filled" severity="error">{emailError.password}</Alert>
+                          loginError.password &&
+                          <Alert className='errorText' variant="filled" severity="error">{loginError.password}</Alert>
                         }
                         </div>
                         <span onClick={toggleShowPassword}>

@@ -70,14 +70,16 @@
     position: absolute;
     width: 100%;
 }
-.errorText {
-    margin-top: 10px;
-}
 .passIcon span {
     position: absolute;
     content: '';
     right: 10px;
     top: 18px;
+}
+.errorText {
+    margin-top: 10px;
+    color: #FFF !important;
+    background-color: #ff000076 !important;
 }
 .loginBtn {
     background-color: #5F34F5 !important;

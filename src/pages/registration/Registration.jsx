@@ -6,6 +6,7 @@ import MuiInput from '../../components/MuiInput'
 import CustomButton from '../../components/CustomButton'
 import AuthNavigate from '../../components/AuthNavigate'
 import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa6"
+import {TextField, IconButton, InputAdornment } from '@mui/material';
 import RegImg from '../../assets/images/sign up.png'
 import Image from '../../utilities/Image'
 
@@ -33,8 +34,9 @@ let handlerRegEmail = (e) => {
 let [showPassword, setShowPassword] = useState(false);
 
   let toggleShowPassword = () => {
-    setShowPassword(!showPassword);
+    setShowPassword((prevShowPassword) => !prevShowPassword);
   };
+
 // ------------validation------
 
 let [password, setPassword] = useState();
@@ -46,21 +48,21 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#
   };
 
 // --------------------error messages-------------------
-let [emailError, setEmailError] = useState("")
+let [regError, setRegError] = useState("")
 
   let handlerRegSubmit = () => {
       if (!fulName) {
-        setEmailError({ fulName: "Enter your name" });
+        setRegError({ fulName: "Enter your name" });
       } else if (!email) {
-        setEmailError({ email: "Enter your email address" });
+        setRegError({ email: "Enter your email address" });
       } else if (!email.match(emailregex)) {
-        setEmailError({ email: "Please enter a valid email address" });
+        setRegError({ email: "Please enter a valid email address" });
       } else if (!password) {
-        setEmailError({ password: "Enter your password" });
+        setRegError({ password: "Enter your password" });
       } else if (!password.match(passwordRegex)) {
-        setEmailError({ password: "Please enter a strong password" });
+        setRegError({ password: "Please enter a strong password" });
       } else {
-        setEmailError({ email: "", password: "" });
+        setRegError({fulName: "", email: "", password: "" });
         console.log({fulName, email, password});
       }
     };
@@ -79,29 +81,38 @@ let [emailError, setEmailError] = useState("")
                       <div>
                         <MuiInput onChange={handlerFulName} style="inputStyle" variant="outlined" labeltext="Ful Name"  type="text" name="ful name" />
                         {
-                          emailError.fulName &&
-                          <Alert className='errorText' severity="error">{emailError.fulName}</Alert>
+                          regError.fulName &&
+                          <Alert className='errorText' severity="error">{regError.fulName}</Alert>
                         }
                       </div>
                       <div>
                         <MuiInput onChange={handlerRegEmail} style="inputStyle" variant="outlined" labeltext="Email Address"  type="email" name="email" />
                         {
-                          emailError.email &&
-                          <Alert className='errorText' severity="error">{emailError.email}</Alert>
+                          regError.email &&
+                          <Alert className='errorText' severity="error">{regError.email}</Alert>
                         }
                       </div>
-                      <div className='passIcon'>
-                        <MuiInput onChange={handlerRegPassword} style="inputStyle" variant="outlined" labeltext="Password"  type={showPassword ? 'text' : 'password'} name="password" />
-                        <div className='passIconError'>
+                      <div>
+                        <TextField
+                          type={showPassword ? 'text' : 'password'} label="Password" variant="outlined" fullWidth value={password}
+                          // onChange={(e) => setPassword(e.target.value)}
+                          onChange={handlerRegPassword}
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <IconButton onClick={toggleShowPassword} edge="end">
+                                    {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                                  </IconButton>
+                                </InputAdornment>
+                              ),
+                            }}
+                        />
                         {
-                          emailError.password &&
-                          <Alert className='errorText' severity="error">{emailError.password}</Alert>
+                        regError.password &&
+                        <Alert className='errorText' variant="filled" severity="error">{regError.password}</Alert>
                         }
-                        </div>
-                        <span onClick={toggleShowPassword}>
-                          {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
-                        </span>
-                      </div>
+                    </div> 
+
                       <CustomButton onClick={handlerRegSubmit} styling="regBtn" variant="contained" text="Sign up" />
                     </div>
                     <div>
@@ -120,6 +131,6 @@ let [emailError, setEmailError] = useState("")
 
     </>
   )
-}
-
+};
 export default Registration
+
