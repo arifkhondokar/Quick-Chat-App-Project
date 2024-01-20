@@ -1,6 +1,6 @@
 /* -------------sidebar css----------------- */
 .navbar {
-    padding: 35px 0px 35px 32px;
+    margin: 15px 0px 15px 22px;
 }
 .sideNavbar {
     height: 100vh;
@@ -29,6 +29,7 @@
     text-align: center;
     font-size: 18px;
     margin-top: 15px;
+    font-family: 'Open Sans', sans-serif;
 }
 .navbarItems {
     display: flex;
@@ -52,4 +53,5 @@
     border: 0;
     border-radius: 10px;
     cursor: pointer;
+    background-color: white;
 }

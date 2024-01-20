@@ -1,10 +1,10 @@
 import { TextField } from '@mui/material'
 import React from 'react'
 
-const MuiInput = ({variant, labeltext, style, type, name, onChange, required}) => {
+const MuiInput = ({variant, labeltext, value, style, type, name, onChange, required}) => {
   return (
     <>
-    <TextField onChange={onChange} className={style} variant={variant} label={labeltext}  type={type} name={name} required= {required} />
+    <TextField onChange={onChange} value={value} className={style} variant={variant} label={labeltext}  type={type} name={name} required= {required} />
     </>
   )
 }

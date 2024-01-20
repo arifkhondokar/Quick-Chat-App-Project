@@ -39,7 +39,7 @@ let [showPassword, setShowPassword] = useState(false);
 
 // ------------validation------
 
-let [password, setPassword] = useState();
+let [password, setPassword] = useState("");
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,20}$/
 
@@ -65,6 +65,9 @@ let [regError, setRegError] = useState("")
         setRegError({fulName: "", email: "", password: "" });
         console.log({fulName, email, password});
       }
+      setFulName("")
+      setEmail("")
+      setPassword("")
     };
 
 
@@ -79,14 +82,14 @@ let [regError, setRegError] = useState("")
                     <span>Free register and you can enjoy it</span>
                     <div className='formMain'>
                       <div>
-                        <MuiInput onChange={handlerFulName} style="inputStyle" variant="outlined" labeltext="Ful Name"  type="text" name="ful name" />
+                        <MuiInput onChange={handlerFulName} value={fulName} style="inputStyle" variant="outlined" labeltext="Ful Name"  type="text" name="ful name" />
                         {
                           regError.fulName &&
                           <Alert className='errorText' severity="error">{regError.fulName}</Alert>
                         }
                       </div>
                       <div>
-                        <MuiInput onChange={handlerRegEmail} style="inputStyle" variant="outlined" labeltext="Email Address"  type="email" name="email" />
+                        <MuiInput onChange={handlerRegEmail} value={email} style="inputStyle" variant="outlined" labeltext="Email Address"  type="email" name="email" />
                         {
                           regError.email &&
                           <Alert className='errorText' severity="error">{regError.email}</Alert>
@@ -94,7 +97,7 @@ let [regError, setRegError] = useState("")
                       </div>
                       <div>
                         <TextField
-                          type={showPassword ? 'text' : 'password'} label="Password" variant="outlined" fullWidth value={password}
+                          type={showPassword ? 'text' : 'password'} value={password} label="Password" variant="outlined" fullWidth
                           // onChange={(e) => setPassword(e.target.value)}
                           onChange={handlerRegPassword}
                             InputProps={{

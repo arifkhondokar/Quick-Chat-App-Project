@@ -57,6 +57,8 @@ let [loginError, setLoginError] = useState("")
         setLoginError({ email: "", password: "" });
         console.log({email, password});
       }
+      setEmail("")
+      setPassword("")
     };
 
 // -----------------------forgot passwors------------------
@@ -72,23 +74,24 @@ let [openModal, setOpenModal] = useState(false);
     };
 // -------forgot email validation------------------------
 
-let [formData, setFormData] = useState("")
+let [forgotEmail, setForgotEmail] = useState("")
  
   let handlerForgot = (e) => {
-    setFormData(e.target.value)
+    setForgotEmail(e.target.value)
   }
 
 let [error, setError] = useState("")
 
   let handlerForgotSubmit =() => {
-    if(!formData){
+    if(!forgotEmail){
       setError({email: "Enter your email address"}); 
-    }else if(!formData.match(emailregex)){
+    }else if(!forgotEmail.match(emailregex)){
       setError({email: "please enter a valid email address"});
     }else{
       setError({email: ""})
-      console.log(formData);
+      console.log(forgotEmail);
     }
+    setForgotEmail("")
   }
 
   return (
@@ -105,14 +108,14 @@ let [error, setError] = useState("")
                     </div>
                     <div className='formMain'>
                       <div>
-                        <MuiInput onChange={handlerLoginEmail} style="inputStyle" variant="standard" labeltext="Email Address" type="email" name="email" />
+                        <MuiInput onChange={handlerLoginEmail} value={email} style="inputStyle" variant="standard" labeltext="Email Address" type="email" name="email" />
                         {
                           loginError.email &&
                           <Alert className='errorText' variant="filled" severity="error">{loginError.email}</Alert>
                         }
                       </div>
                       <div className='passIcon'>
-                        <MuiInput onChange={handlerLoginPassword} style="inputStyle" variant="standard" labeltext="Password" type={showPassword ? 'text' : 'password'} name="password" />
+                        <MuiInput onChange={handlerLoginPassword} value={password} style="inputStyle" variant="standard" labeltext="Password" type={showPassword ? 'text' : 'password'} name="password" />
                         <div className='passIconError'>
                         {
                           loginError.password &&
@@ -168,7 +171,7 @@ let [error, setError] = useState("")
           </Typography>
           <div>
             <div>
-              <MuiInput onChange={handlerForgot} style="inputStyle" variant="standard" labeltext="Email Address"  type="email" name="email" />
+              <MuiInput onChange={handlerForgot} style="inputStyle" variant="standard" labeltext="Email Address" value={forgotEmail}  type="email" name="email" />
             {
               error.email &&
               <Alert className='errorText' severity="warning" >{error.email}</Alert>
