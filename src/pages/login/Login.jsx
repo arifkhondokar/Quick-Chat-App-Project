@@ -56,9 +56,9 @@ let [loginError, setLoginError] = useState("")
       } else {
         setLoginError({ email: "", password: "" });
         console.log({email, password});
+        setEmail("")
+        setPassword("")
       }
-      setEmail("")
-      setPassword("")
     };
 
 // -----------------------forgot passwors------------------
@@ -90,8 +90,8 @@ let [error, setError] = useState("")
     }else{
       setError({email: ""})
       console.log(forgotEmail);
+      setForgotEmail("")
     }
-    setForgotEmail("")
   }
 
   return (

@@ -64,10 +64,10 @@ let [regError, setRegError] = useState("")
       } else {
         setRegError({fulName: "", email: "", password: "" });
         console.log({fulName, email, password});
+        setFulName("")
+        setEmail("")
+        setPassword("")
       }
-      setFulName("")
-      setEmail("")
-      setPassword("")
     };
 
 
