@@ -1,6 +1,7 @@
 import { Alert, Box, Button, Grid, Modal, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import './login.css'
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import SectionHeading from '../../components/SectionHeading'
 import AuthNavigate from '../../components/AuthNavigate'
 import CustomButton from '../../components/CustomButton'
@@ -14,6 +15,9 @@ import { NavLink } from 'react-router-dom'
 
 
 const Login = () => {
+
+  const auth = getAuth();
+
 
 // ---------------------------------email------------------------------
 let [email, setEmail] = useState('')
@@ -55,9 +59,22 @@ let [loginError, setLoginError] = useState("")
         setLoginError({ password: "Please enter a strong password" });
       } else {
         setLoginError({ email: "", password: "" });
-        console.log({email, password});
+        // console.log({email, password});
         setEmail("")
         setPassword("")
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          console.log(userCredential);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+        if (errorCode == "auth/invalid-credential"){
+          setLoginError({email: "email or password error"})
+        }else{
+          setLoginError({email: ""})
+        }
+        });
       }
     };
 

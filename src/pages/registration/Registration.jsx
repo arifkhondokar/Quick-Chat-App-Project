@@ -1,6 +1,7 @@
 import { Alert, Box, Grid } from '@mui/material'
 import React, { useState } from 'react'
 import '../login/login.css'
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification  } from "firebase/auth";
 import SectionHeading from '../../components/SectionHeading'
 import MuiInput from '../../components/MuiInput'
 import CustomButton from '../../components/CustomButton'
@@ -9,10 +10,16 @@ import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa6"
 import {TextField, IconButton, InputAdornment } from '@mui/material';
 import RegImg from '../../assets/images/sign up.png'
 import Image from '../../utilities/Image'
-
-
+import { Blocks } from 'react-loader-spinner'
+import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
+
+  const auth = getAuth();
+  const navigate = useNavigate();
+  const [loader, setLoader] = useState(false)
+
+
 // -------------------------ful name--------------------------
 let [fulName, setFulName] = useState("")
 
@@ -62,11 +69,29 @@ let [regError, setRegError] = useState("")
       } else if (!password.match(passwordRegex)) {
         setRegError({ password: "Please enter a strong password" });
       } else {
+        setLoader(true)
         setRegError({fulName: "", email: "", password: "" });
-        console.log({fulName, email, password});
         setFulName("")
         setEmail("")
         setPassword("")
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          navigate("/");
+          console.log(userCredential.user)
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          if (errorCode == "auth/email-already-in-use"){
+            setRegError({ email: "Email already exited, try new email" });
+          }else{
+            setRegError({ email: "" });
+          }
+        });
+        // console.log({fulName, email, password});
+        setTimeout(()=>{
+          setLoader(false)
+        },1000)
       }
     };
 
@@ -115,8 +140,23 @@ let [regError, setRegError] = useState("")
                         <Alert className='errorText' variant="filled" severity="error">{regError.password}</Alert>
                         }
                     </div> 
-
-                      <CustomButton onClick={handlerRegSubmit} styling="regBtn" variant="contained" text="Sign up" />
+                    
+                      {
+                        loader
+                        ? 
+                        <Blocks
+                          height="80"
+                          width="300"
+                          color="#4fa94d"
+                          ariaLabel="blocks-loading"
+                          wrapperStyle={{}}
+                          wrapperClass="blocks-wrapper"
+                          visible={true}
+                          className="loader"
+                        />
+                        :
+                      <CustomButton onClick={handlerRegSubmit} styling="regBtn"                   variant="contained" text="Sign up" />
+                      }
                     </div>
                     <div>
                       <AuthNavigate style="loginAuth" text="Already  have an account ?" link="/" linkText="Sign In" />

@@ -6,7 +6,7 @@
     justify-content: center;
 }
 .loginBoxInner {
-    width: 390px;
+    width: 390px ;
 }
 .authHeading {
     color: #03014C;
@@ -84,16 +84,16 @@
 .loginBtn {
     background-color: #5F34F5 !important;
     color: white;
-    padding: 25px 0 !important;
-    font-style: 20px;
+    padding: 15px 0 !important;
+    font-size: 16px !important;
     font-family: 'Open Sans', sans-serif;
     border-radius: 8px !important;
 }
 .regBtn {
     background-color: #5F34F5 !important;
     color: white;
-    padding: 25px 5px !important;
-    font-style: 20px;
+    padding: 15px 5px !important;
+    font-size: 16px !important;
     font-family: 'Open Sans', sans-serif;
     border-radius: 75px !important;
 }
