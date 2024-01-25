@@ -1,7 +1,7 @@
 import { Alert, Box, Button, Grid, Modal, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import './login.css'
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut  } from "firebase/auth";
 import SectionHeading from '../../components/SectionHeading'
 import AuthNavigate from '../../components/AuthNavigate'
 import CustomButton from '../../components/CustomButton'
@@ -11,12 +11,14 @@ import Image from '../../utilities/Image'
 import LogImg from '../../assets/images/login picture.png'
 import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa6"
 import { IoClose } from "react-icons/io5"
-import { NavLink } from 'react-router-dom'
-
+import { NavLink, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
 
   const auth = getAuth();
+  const navigate = useNavigate();
 
 
 // ---------------------------------email------------------------------
@@ -64,7 +66,26 @@ let [loginError, setLoginError] = useState("")
         setPassword("")
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          console.log(userCredential);
+          if (userCredential.user.
+            emailVerified){
+              navigate("/home");
+              console.log(userCredential.user);
+            }else{   
+              signOut(auth).then(() => {
+                setTimeout(()=>{
+                  toast.error('Please Verify your email', {
+                    position: "top-right",
+                    autoClose: 4000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    });
+                },400)
+              })
+            }
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -113,6 +134,20 @@ let [error, setError] = useState("")
 
   return (
     <>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+
+
     <Box>
         <Grid container spacing={0}>
             <Grid item xs={6}>

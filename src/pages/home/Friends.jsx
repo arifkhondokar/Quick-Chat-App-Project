@@ -8,7 +8,7 @@ const Friends = () => {
     <GroupCard cardtitle="Friends">
         <div className='userMainBox'>
         {[0,1,2,3,4,5,6].map((item,index)=>(
-            <div className='userItem'>
+            <div key={index} className='userItem'>
             <div className='userImgBox'>
               <Image source='' alt='propic'/>
             </div>

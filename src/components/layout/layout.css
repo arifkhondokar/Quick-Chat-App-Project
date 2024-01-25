@@ -16,12 +16,13 @@
     padding: 30px 0;
     row-gap: 30px;
 }
-.proImg {
+.sideNavbar .proImg {
     width: 80px;
     height: 80px;
     border-radius: 50%;
     overflow: hidden;
     background-color: #e0f2ec;
+    margin: 0 auto;
 }
 .proImg img {
     width: 100%;

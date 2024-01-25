@@ -1,7 +1,7 @@
 import { Alert, Box, Grid } from '@mui/material'
 import React, { useState } from 'react'
 import '../login/login.css'
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification  } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile  } from "firebase/auth";
 import SectionHeading from '../../components/SectionHeading'
 import MuiInput from '../../components/MuiInput'
 import CustomButton from '../../components/CustomButton'
@@ -12,9 +12,14 @@ import RegImg from '../../assets/images/sign up.png'
 import Image from '../../utilities/Image'
 import { Blocks } from 'react-loader-spinner'
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { getDatabase, ref, set } from "firebase/database";
+
 
 const Registration = () => {
 
+  const db = getDatabase();
   const auth = getAuth();
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false)
@@ -27,7 +32,7 @@ let handlerFulName = (e) => {
   setFulName(e.target.value)
 }
 
-// ---------------------------------email------------------------------
+// --------------------------email------------------------------
 let [email, setEmail] = useState("")
 
 const emailregex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -36,7 +41,7 @@ let handlerRegEmail = (e) => {
     setEmail(e.target.value)
     }
 
-// -------------------------------password------------------------------
+// -----------------------password------------------------------
 // -------toggle icon--------------
 let [showPassword, setShowPassword] = useState(false);
 
@@ -76,8 +81,35 @@ let [regError, setRegError] = useState("")
         setPassword("")
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          navigate("/");
-          console.log(userCredential.user)
+          sendEmailVerification(auth.currentUser).then(()=> {
+              setTimeout(()=>{
+                toast.success("verification email send successfully!", {
+                  position: "top-right",
+                  autoClose: 4000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                  });
+              },400)
+            updateProfile(auth.currentUser, {
+              displayName: fulName, 
+              photoURL: "https://thumbs.dreamstime.com/b/unknown-male-avatar-profile-image-businessman-vector-unknown-male-avatar-profile-image-businessman-vector-profile-179373829.jpg"
+            })
+            .then(() => {
+              set(ref(db, 'users/' + userCredential.user.uid), {
+                username: userCredential.user.displayName,
+                email: userCredential.user.email,
+                profile_picture : userCredential.user.photoURL
+              }).then(()=>{
+                navigate("/");
+                console.log(userCredential)
+              })
+
+            })
+          })
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -91,13 +123,28 @@ let [regError, setRegError] = useState("")
         // console.log({fulName, email, password});
         setTimeout(()=>{
           setLoader(false)
-        },1000)
+        },500)
       }
     };
 
 
   return (
     <>
+     
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+     
+
     <Box>
         <Grid container spacing={0}>
             <Grid item xs={6}>
