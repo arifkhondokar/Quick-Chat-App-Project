@@ -12,8 +12,8 @@ import LogImg from '../../assets/images/login picture.png'
 import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa6"
 import { IoClose } from "react-icons/io5"
 import { NavLink, useNavigate } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import ReactToastify from '../../components/Toastify/ReactToastify';
 
 const Login = () => {
 
@@ -41,7 +41,7 @@ let [showPassword, setShowPassword] = useState(false);
 
 let [password, setPassword] = useState('');
 
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,20}$/
+const passwordRegex =  /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/;
 
   let handlerLoginPassword = (e) => {
     setPassword(e.target.value)
@@ -73,9 +73,9 @@ let [loginError, setLoginError] = useState("")
             }else{   
               signOut(auth).then(() => {
                 setTimeout(()=>{
-                  toast.error('Please Verify your email', {
+                  toast.error('Please verify your email', {
                     position: "top-right",
-                    autoClose: 4000,
+                    autoClose: 3000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -83,7 +83,7 @@ let [loginError, setLoginError] = useState("")
                     progress: undefined,
                     theme: "dark",
                     });
-                },400)
+                },500)
               })
             }
         })
@@ -91,7 +91,9 @@ let [loginError, setLoginError] = useState("")
           const errorCode = error.code;
           const errorMessage = error.message;
         if (errorCode == "auth/invalid-credential"){
-          setLoginError({email: "email or password error"})
+          setLoginError({email:
+            "Email Or Password Error"
+          })
         }else{
           setLoginError({email: ""})
         }
@@ -134,18 +136,7 @@ let [error, setError] = useState("")
 
   return (
     <>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
+       <ReactToastify/>
 
 
     <Box>

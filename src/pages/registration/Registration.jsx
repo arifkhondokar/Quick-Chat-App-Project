@@ -12,9 +12,10 @@ import RegImg from '../../assets/images/sign up.png'
 import Image from '../../utilities/Image'
 import { Blocks } from 'react-loader-spinner'
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getDatabase, ref, set } from "firebase/database";
+import ReactToastify from '../../components/Toastify/ReactToastify';
 
 
 const Registration = () => {
@@ -53,7 +54,7 @@ let [showPassword, setShowPassword] = useState(false);
 
 let [password, setPassword] = useState("");
 
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,20}$/
+const passwordRegex =   /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/;
 
   let handlerRegPassword = (e) => {
     setPassword(e.target.value);
@@ -82,18 +83,18 @@ let [regError, setRegError] = useState("")
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           sendEmailVerification(auth.currentUser).then(()=> {
-              setTimeout(()=>{
-                toast.success("verification email send successfully!", {
-                  position: "top-right",
-                  autoClose: 4000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "light",
-                  });
-              },400)
+            setTimeout(()=>{
+              toast.success("Verification email send successfully!", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            },1000)
             updateProfile(auth.currentUser, {
               displayName: fulName, 
               photoURL: "https://thumbs.dreamstime.com/b/unknown-male-avatar-profile-image-businessman-vector-unknown-male-avatar-profile-image-businessman-vector-profile-179373829.jpg"
@@ -104,7 +105,9 @@ let [regError, setRegError] = useState("")
                 email: userCredential.user.email,
                 profile_picture : userCredential.user.photoURL
               }).then(()=>{
+                setTimeout(()=>{
                 navigate("/");
+              },1000)
                 console.log(userCredential)
               })
 
@@ -130,20 +133,7 @@ let [regError, setRegError] = useState("")
 
   return (
     <>
-     
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
-     
+     <ReactToastify/>
 
     <Box>
         <Grid container spacing={0}>

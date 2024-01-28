@@ -1,13 +1,15 @@
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import './layout.css'
-import { getAuth, signInWithEmailAndPassword, signOut  } from "firebase/auth";
+import { getAuth, signOut  } from "firebase/auth";
 import { IoMdHome } from "react-icons/io";
 import { AiFillMessage } from "react-icons/ai";
 import { IoMdNotifications } from "react-icons/io";
 import { IoSettingsSharp } from "react-icons/io5";
 import { HiOutlineLogout } from "react-icons/hi";
 import Image from '../../utilities/Image'
+import ReactToastify from '../Toastify/ReactToastify';
+import { toast } from 'react-toastify';
 
 
 const SideBar = () => {
@@ -16,7 +18,19 @@ const SideBar = () => {
     const navigate = useNavigate();
     let handlerLogout = () => {
         signOut(auth).then(()=> {
-            console.log("logout done");
+            setTimeout(()=>{
+                toast.success("Sign out successfully!", {
+                  position: "top-right",
+                  autoClose: 4000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                  });
+              },400)
+            // console.log("logout done");
             navigate("/");
         })
     }
@@ -26,6 +40,9 @@ const SideBar = () => {
 
   return (
     <>
+
+    <ReactToastify/>
+
     <div className='navbar'>
         <div className='sideNavbar'>
             <div >
