@@ -13,8 +13,6 @@ import Settings from './pages/settings/Settings';
 import RootLayout from "./components/layout/RootLayout";
 
 
-
-
 function App() {
 
   const router = createBrowserRouter(

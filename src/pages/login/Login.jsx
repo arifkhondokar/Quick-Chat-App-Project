@@ -14,12 +14,14 @@ import { IoClose } from "react-icons/io5"
 import { NavLink, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import ReactToastify from '../../components/Toastify/ReactToastify';
+import { useDispatch } from 'react-redux'
+import { loginUser } from '../../features/userSlice';
 
 const Login = () => {
 
   const auth = getAuth();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch()
 
 // ---------------------------------email------------------------------
 let [email, setEmail] = useState('')
@@ -68,6 +70,8 @@ let [loginError, setLoginError] = useState("")
         .then((userCredential) => {
           if (userCredential.user.
             emailVerified){
+              localStorage.setItem('user', JSON.stringify(userCredential.user));
+              dispatch(loginUser(userCredential.user))
               navigate("/home");
               console.log(userCredential.user);
             }else{   

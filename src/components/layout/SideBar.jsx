@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import './layout.css'
 import { getAuth, signOut  } from "firebase/auth";
@@ -10,15 +10,27 @@ import { HiOutlineLogout } from "react-icons/hi";
 import Image from '../../utilities/Image'
 import ReactToastify from '../Toastify/ReactToastify';
 import { toast } from 'react-toastify';
-
+import { useSelector, useDispatch } from 'react-redux'
+import { loginUser } from '../../features/userSlice';
 
 const SideBar = () => {
 
+    const data = useSelector((state) => state.loginUserData.value)
     const auth = getAuth();
     const navigate = useNavigate();
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+        if(!data){
+            navigate("/");
+        } 
+    },[])
+
     let handlerLogout = () => {
         signOut(auth).then(()=> {
             setTimeout(()=>{
+                localStorage.removeItem("user");
+                dispatch(loginUser(null))
                 toast.success("Sign out successfully!", {
                   position: "top-right",
                   autoClose: 4000,
@@ -30,13 +42,12 @@ const SideBar = () => {
                   theme: "light",
                   });
               },400)
-            // console.log("logout done");
-            navigate("/");
+              navigate("/");
         })
     }
 
     const userInfo = auth.currentUser;
-    console.log();
+    
 
   return (
     <>
@@ -47,9 +58,10 @@ const SideBar = () => {
         <div className='sideNavbar'>
             <div >
                 <div className='proImg'>
-                    <Image source={userInfo && userInfo.photoURL} alt='img'/>
+                    <Image source={data && data.photoURL} alt='img'/>
                 </div>
-                <h3 className='userName'>{userInfo && userInfo.displayName}</h3>
+                <h3 className='userName'>{ data && data.displayName}</h3>
+                <p className='userEmail'>{data && data.email}</p>
             </div>
             <div>
                 <ul className='navbarItems'>
