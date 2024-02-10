@@ -35,6 +35,7 @@
     font-size: 18px;
     margin-top: 15px;
     font-family: 'Open Sans', sans-serif;
+    text-transform: uppercase;
 }
 .userEmail {
     color: #ffffff;

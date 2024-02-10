@@ -23,8 +23,8 @@ const SideBar = () => {
     useEffect(()=>{
         if(!data){
             navigate("/");
-        } 
-    },[])
+        }
+    },[]);
 
     let handlerLogout = () => {
         signOut(auth).then(()=> {
@@ -47,7 +47,6 @@ const SideBar = () => {
     }
 
     const userInfo = auth.currentUser;
-    
 
   return (
     <>

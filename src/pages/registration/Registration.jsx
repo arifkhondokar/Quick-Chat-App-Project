@@ -192,7 +192,7 @@ let [regError, setRegError] = useState("")
                           className="loader"
                         />
                         :
-                      <CustomButton onClick={handlerRegSubmit} styling="regBtn"                   variant="contained" text="Sign up" />
+                      <CustomButton onClick={handlerRegSubmit} styling="regBtn" variant="contained" text="Sign up" />
                       }
                     </div>
                     <div>
